@@ -61,6 +61,7 @@ sidebar {
   flex-direction: column;
   position: absolute;
   left: var(--sidebar-width);
+  top: var(--navbar-height);
 }
 
 main {

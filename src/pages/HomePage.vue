@@ -1,21 +1,45 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo" class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="d-flex">
+    <div class="post-container">
+      <Post v-for="p in posts" :key="p._id" :post="p" />
+    </div>
+    <div class="income-container">
+      <h1>buy stuff</h1>
+      <h2>SPEND MONEY</h2>
+      <h3>CONSUUUUUME!!</h3>
     </div>
   </div>
 </template>
 
 <script>
+import { AppState } from "../AppState";
+import { computed, onMounted } from "vue";
+import Pop from "../utils/Pop";
+import { logger } from "../utils/Logger";
+import { postsService } from "../services/PostsService";
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    onMounted(async () => {
+      try {
+        // add call to service here
+        postsService.getAll()
+      } catch (error) {
+        Pop.toast(error.message, "error")
+        logger.error(error)
+      }
+    })
+    return {
+      posts: computed(() => AppState.posts)
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
+.post-container {
+  width: 75%;
+}
 .home{
   display: grid;
   height: 80vh;
