@@ -9,7 +9,7 @@
     <router-view />
   </main>
   <footer>
-    <div class="bg-dark text-light text-center p-4">
+    <div class="bg-dark text-light p-1">
       Annika
     </div>
   </footer>
@@ -34,7 +34,8 @@ export default {
 
 :root {
   --sidebar-width: 20vw;
-  --navbar-height: 8vh;
+  --navbar-height: 7.093vh;
+  --footer-height: 1.803vh;
 }
 
 header {
@@ -42,14 +43,19 @@ header {
 }
 sidebar {
   width: var(--sidebar-width);
-  height: calc(100vh - var(--navbar-height));
+  min-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
 }
 
 main {
   width: calc(100vw - var(--sidebar-width));
+  min-height: calc(100vh - (var(--navbar-height) + var(--footer-height)));
   position: absolute;
   left: var(--sidebar-width);
   top: var(--navbar-height);
+}
+
+footer {
+  height: var(--footer-height);
 }
 
 </style>
