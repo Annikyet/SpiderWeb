@@ -12,7 +12,7 @@
       </main>
       <footer>
         <div class="bg-dark text-light p-1 h-100">
-          Annika
+          <InfoFooter />
         </div>
       </footer>
     </div>
@@ -23,6 +23,7 @@
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import ProfileSidebar from './components/ProfileSidebar.vue'
+import InfoFooter from './components/InfoFooter.vue';
 export default {
   name: "App",
   setup() {
@@ -30,7 +31,7 @@ export default {
       appState: computed(() => AppState)
     };
   },
-  components: { ProfileSidebar }
+  components: { ProfileSidebar, InfoFooter }
 }
 </script>
 <style lang="scss">
@@ -39,7 +40,7 @@ export default {
 :root {
   --sidebar-width: 20vw;
   --navbar-height: 8vh;
-  --footer-height: 4vh;
+  --footer-height: 8vh;
 }
 
 header {

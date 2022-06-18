@@ -1,7 +1,7 @@
 <template>
   <div class="component">
-    Made by Annika
-
+    <p>Made by Annika</p>
+    <p><a href="https://www.flaticon.com/free-icons/spider" title="spider icons">Spider icons created by Freepik  & Smashicons - Flaticon</a></p>
   </div>
 </template>
 
@@ -16,5 +16,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+  a {
+    color: white;
+  }
 </style>

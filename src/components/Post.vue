@@ -1,15 +1,21 @@
 <template>
   <div class="component">
-    <div class="card">
+    <div class="card p-2 m-4">
       <img :src="post.imgUrl" alt="post image" class="card-img">
       <div class="card-img-overlay">
-        <h3 class="card-title">
+        <!-- put a router link here omg om gom g and pass creatorid through -->
+        <h3 class="card-title" @click="gotoProfile">
           <img v-if="post.creator.picture != '' && post.creator.picture" :src="post.creator.picture" :alt="post.creator.name" class="profile-pic-small">
           {{post.creator.name}}
         </h3>
       </div>
       <div class="card-body">
         <p class="card-text">{{post.body}}</p>
+        <div class="d-flex justify-content-end">
+          <button class="btn" @click="likePost">
+            <img src="../assets/img/spider.png" alt="Like" class="like-button">
+          </button>
+        </div>
       </div>
     </div>
 
@@ -22,11 +28,26 @@ import { AppState } from "../AppState";
 import { computed, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
+import { router } from "../router";
+import { logger } from "../utils/Logger";
+import Pop from "../utils/Pop";
 export default {
   props: {post: {type: Object, required: true} },
   setup(props){
     const router = useRouter()
-    return {}
+    return {
+      gotoProfile() {
+        logger.log('gotoProfile')
+        router.push({
+          name: 'Profile',
+          params: {id: props.post.creator.id}
+        })
+      },
+
+      likePost() {
+        Pop.toast('booped the like spider 🕷')
+      }
+    }
   }
 }
 </script>
@@ -49,6 +70,12 @@ export default {
   width: 48px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.like-button {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
 }
 
 </style>

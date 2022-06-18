@@ -4,17 +4,8 @@ import { reactive } from 'vue'
 export const AppState = reactive({
   user: {},
   account: {},
-  posts: [
-    {
-      _id: 'meow123',
-      body: 'Meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow meow.',
-      imgUrl: 'https://thiscatdoesnotexist.com',
-      creator: {
-        picture: 'https://thiscatdoesnotexist.com',
-        name: 'Meow McMeowFace'
-      }
-    }
-  ]
+  posts: [],
+  profile: {}
 })
 
 
