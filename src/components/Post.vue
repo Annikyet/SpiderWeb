@@ -4,6 +4,7 @@
       <img :src="post.imgUrl" alt="post image" class="card-img">
       <div class="card-img-overlay">
         <!-- put a router link here omg om gom g and pass creatorid through -->
+        <!-- WHY TF DOES @CLICK WORK HERE -->
         <h3 class="card-title" @click="gotoProfile">
           <img v-if="post.creator.picture != '' && post.creator.picture" :src="post.creator.picture" :alt="post.creator.name" class="profile-pic-small">
           {{post.creator.name}}
@@ -12,13 +13,12 @@
       <div class="card-body">
         <p class="card-text">{{post.body}}</p>
         <div class="d-flex justify-content-end">
-          <button class="btn" @click="likePost">
-            <img src="../assets/img/spider.png" alt="Like" class="like-button">
-          </button>
+          <!-- BUT NOT HERE!!!! -->
+          <!-- Tried using .native, v-on:click, wrapping in a <button> <div> and <h3>, even tried copying the working code above AND IT DOESNT WORK HERE -->
+          <img src="../assets/img/spider.png" alt="Like" @click="likePost" class="like-button">
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -45,6 +45,7 @@ export default {
       },
 
       likePost() {
+        // This will never run because Vue is petulant and arbitrary.
         Pop.toast('booped the like spider 🕷')
       }
     }
