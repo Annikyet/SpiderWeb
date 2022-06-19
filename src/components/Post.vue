@@ -12,7 +12,8 @@
       </div>
       <div class="card-body">
         <p class="card-text">{{post.body}}</p>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-between">
+          <div class="time-posted">{{prettyTimeSince}}</div>
           <!-- BUT NOT HERE!!!! -->
           <!-- Tried using .native, v-on:click, calling a method vs object, wrapping in a <button> <div> and <h3>, -->
           <!-- even tried copying the working code above AND IT DOESNT WORK HERE -->
@@ -21,8 +22,13 @@
           <!-- NOPE DOESN'T WORK INSIDE IT'S OWN COMPONENT EITHER (WHAT??? WHY???) -->
           <!-- THE METHOD 'CALL' *ABOVE* WORKS FINE IF I CHANGE "gotoProfile" to "likePost" SO WHY DOES IT HATE ME *HERE*-->
           <!-- TRIED USING THE methods OBJECT FROM THE VUE DOCUMENTATION AND STILL NADA -->
+          <!-- It's not as simple as just the first one called either, since commenting out the above @click doesn't enable it here -->
+          <!-- Maybe there's some HTML/CSS voodoo that's blocking this element from being clicked... somehow??? -->
           <!-- SERIOUSLY VUE THIS IS SIMPLE, WHY MAKE IT SO FREAKING HARD!!???!! -->
-          <img src="../assets/img/spider.png" alt="Like" @click="likePost" class="like-button">
+          <div class="likes">
+            {{post.likes.length}}
+            <img src="../assets/img/spider.png" alt="Like" @click="likePost" class="like-button">
+          </div>
         </div>
       </div>
     </div>
@@ -37,6 +43,7 @@ import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import { router } from "../router";
 import { logger } from "../utils/Logger";
+// Does Date need to be imported?
 import Pop from "../utils/Pop";
 // Why does this not match the structure on the Vue documentation?
 // Like, not even a little bit:
@@ -69,23 +76,47 @@ export default {
                 // logger.log('gotoProfile')
                 // How does pushing to a... class(???) (or calling the black box method 'push') take me to the ProfilePage
                 // If it's a custom method, WHY IS IT NAMED PUSH???
-                // If it's an array method... on a class(???), WHY AM I APPENDING TO AN ARRAY TO TRIGGER GOING TO A SINGLE PAGE???
+                // If it's an array method on a class(???), WHY AM I APPENDING TO AN ARRAY TO TRIGGER GOING TO A SINGLE PAGE???
                 router.push({
                     name: "Profile",
                     params: { id: props.post.creator.id }
                 });
             },
-            // likePost() {
-            //     // This will never run because Vue is petulant and arbitrary.
-            //     Pop.toast("booped the like spider 🕷");
-            // }
+            likePost() {
+                // This will never run because...???
+                Pop.toast("booped the like spider 🕷");
+            }
         };
     },
     // nope adding the methods object does nothing
-    methods: {
-      likePost() {
-        // This will never run because Vue is petulant and arbitrary.
-        Pop.toast("booped the like spider 🕷");
+    // methods: {
+    //   likePost() {
+    //     // This will never run because...???
+    //     Pop.toast("booped the like spider 🕷");
+    //   },
+    // },
+    // calculating pretty datetime
+    // should be in a module
+    // linking said module in Vue would take too long to figure out (todo)
+    computed: {
+      prettyTimeSince() {
+        // why is post not defined in this scope?
+        // wait so it IS a class? how?
+        const timeBetween = Date.now() - new Date(this.post.createdAt)
+
+        if (timeBetween < 60000) {
+          return Math.floor(timeBetween) + ' seconds ago'
+        } else if (timeBetween < 3600000) {
+          return Math.floor(timeBetween / 60000) + ' minutes ago'
+        } else if (timeBetween < 86400000) {
+          return Math.floor(timeBetween / 3600000) + ' hours ago'
+        } else if (timeBetween < 604800000) {
+          return Math.floor(timeBetween / 86400000) + ' days ago'
+        } else if (timeBetween < 31536000000) {
+          return Math.floor(timeBetween / 604800000) + ' weeks ago'
+        } else {
+          return Math.floor(timeBetween / 31536000000) + ' years ago'
+        }
       }
     }
 }

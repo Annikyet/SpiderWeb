@@ -4,9 +4,7 @@
       <Post v-for="p in posts" :key="p._id" :post="p" />
     </div>
     <div class="income-container">
-      <h1>buy stuff</h1>
-      <h2>SPEND MONEY</h2>
-      <h3>CONSUUUUUME!!</h3>
+      <IncomePane />
     </div>
   </div>
 </template>
@@ -17,21 +15,26 @@ import { computed, onMounted } from "vue";
 import Pop from "../utils/Pop";
 import { logger } from "../utils/Logger";
 import { postsService } from "../services/PostsService";
+import IncomePane from "../components/IncomePane.vue"
 export default {
-  name: 'Home',
-  setup() {
-    onMounted(async () => {
-      try {
-        postsService.getAll()
-      } catch (error) {
-        Pop.toast(error.message, "error")
-        logger.error(error)
-      }
-    })
-    return {
-      posts: computed(() => AppState.posts)
-    }
-  }
+    name: "Home",
+    setup() {
+        onMounted(async () => {
+            try {
+              // should there be an await here if there's an async?
+              // it seems to work anyways though...
+                postsService.getAll();
+            }
+            catch (error) {
+                Pop.toast(error.message, "error");
+                logger.error(error);
+            }
+        });
+        return {
+            posts: computed(() => AppState.posts)
+        };
+    },
+    components: { IncomePane }
 }
 </script>
 
