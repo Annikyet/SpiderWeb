@@ -4,10 +4,41 @@
     <img class="profile-picture" :src="profile.picture" alt="" />
     <h1>{{ profile.name }}</h1>
   </div>
+  <div class="profile-details">
+    <p class="bio">{{profile.bio}}</p>
+    <ul>
+      <li>{{`${profile.graduated ? 'Graduated' : 'Attending'}`}} {{profile.class}}</li>
+      <!-- v-if not working, idk fix later -->
+      <li :v-if="profile.github != ''"><i class="mdi mdi-github"></i> {{profile.github}}</li>
+      <li :v-if="profile.linkedin != ''"><i class="mdi mdi-linkedin"></i> {{profile.linkedin}}</li>
+      <li :v-if="profile.resume != ''"><i class="mdi mdi-email"></i> {{profile.email}}</li>
+    </ul>
+  </div>
   <div class="post-container">
     <Post v-for="p in posts" :key="p._id" :post="p" />
   </div>
 </template>
+
+<!-- {
+  "subs": [
+    "auth0|626af7654a336d00680db47f"
+  ],
+  "picture": "https://media.discordapp.net/attachments/346428945467441163/987952677776404560/unknown.png?width=705&height=528",
+  "bio": "am badASDADWa and bingusasdwASDWADAASDADW",
+  "coverImg": "https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F001%2F250%2F464%2F766.jpg",
+  "github": "https://github.com/big-daddy-domm",
+  "linkedin": "",
+  "resume": "",
+  "class": "spring 22ASDWDAWasdwa",
+  "graduated": false,
+  "_id": "626af7659c788f325c9c151c",
+  "name": "ASDasdwasadw",
+  "email": "dom123@test.com",
+  "createdAt": "2022-04-28T20:22:03.949Z",
+  "updatedAt": "2022-06-19T08:13:38.258Z",
+  "__v": 0,
+  "id": "626af7659c788f325c9c151c"
+} -->
 
 <script>
 import { computed, onMounted } from 'vue'
@@ -25,7 +56,7 @@ export default {
       // Load profile
       try {
         // call profilesService
-        await profilesService.get(route.params.id)   // dummy id for now
+        await profilesService.get(route.params.id)
         // logger.log(AppState.profile)
       } catch (error) {
         logger.error(error)
