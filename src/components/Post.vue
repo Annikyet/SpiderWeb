@@ -14,7 +14,14 @@
         <p class="card-text">{{post.body}}</p>
         <div class="d-flex justify-content-end">
           <!-- BUT NOT HERE!!!! -->
-          <!-- Tried using .native, v-on:click, wrapping in a <button> <div> and <h3>, even tried copying the working code above AND IT DOESNT WORK HERE -->
+          <!-- Tried using .native, v-on:click, calling a method vs object, wrapping in a <button> <div> and <h3>, -->
+          <!-- even tried copying the working code above AND IT DOESNT WORK HERE -->
+          <!-- WHYYYYY!?!?!?! THESE ARE THE SAME LEVEL IN THE DOM, AND NEITHER IS INSIDE ACTIVE CONTENT -->
+          <!-- DOES VUE JUST ONLY ALLOW ONE ONCLICK PER COMPONENT TO MAKE THINGS HARDER FOR NO REASON? -->
+          <!-- NOPE DOESN'T WORK INSIDE IT'S OWN COMPONENT EITHER (WHAT??? WHY???) -->
+          <!-- THE METHOD 'CALL' *ABOVE* WORKS FINE IF I CHANGE "gotoProfile" to "likePost" SO WHY DOES IT HATE ME *HERE*-->
+          <!-- TRIED USING THE methods OBJECT FROM THE VUE DOCUMENTATION AND STILL NADA -->
+          <!-- SERIOUSLY VUE THIS IS SIMPLE, WHY MAKE IT SO FREAKING HARD!!???!! -->
           <img src="../assets/img/spider.png" alt="Like" @click="likePost" class="like-button">
         </div>
       </div>
@@ -31,25 +38,56 @@ import { Modal } from "bootstrap";
 import { router } from "../router";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
+// Why does this not match the structure on the Vue documentation?
+// Like, not even a little bit:
+// Wait what the hell, these are inside an object. BUT WHAT OBJECT??? IT DOESN'T SAY!
+// data() {
+//   return {
+//     name: 'Vue.js'
+//   }
+// },
+// methods: {
+//   greet(event) {
+//     // `this` inside methods points to the current active instance
+//     alert(`Hello ${this.name}!`)
+//     // `event` is the native DOM event
+//     if (event) {
+//       alert(event.target.tagName)
+//     }
+//   }
+// }
 export default {
-  props: {post: {type: Object, required: true} },
-  setup(props){
-    const router = useRouter()
-    return {
-      gotoProfile() {
-        // logger.log('gotoProfile')
-        router.push({
-          name: 'Profile',
-          params: {id: props.post.creator.id}
-        })
-      },
-
+  // maybe adding a name will help?
+  name: 'Post',
+    props: { post: { type: Object, required: true } },
+    setup(props) {
+        const router = useRouter();
+        return {
+          // Why am I 'returning' my method declarations inside of an object instead of just declaring them???
+          // For that matter why is everything inside an object???
+            gotoProfile() {
+                // logger.log('gotoProfile')
+                // How does pushing to a... class(???) (or calling the black box method 'push') take me to the ProfilePage
+                // If it's a custom method, WHY IS IT NAMED PUSH???
+                // If it's an array method... on a class(???), WHY AM I APPENDING TO AN ARRAY TO TRIGGER GOING TO A SINGLE PAGE???
+                router.push({
+                    name: "Profile",
+                    params: { id: props.post.creator.id }
+                });
+            },
+            // likePost() {
+            //     // This will never run because Vue is petulant and arbitrary.
+            //     Pop.toast("booped the like spider 🕷");
+            // }
+        };
+    },
+    // nope adding the methods object does nothing
+    methods: {
       likePost() {
         // This will never run because Vue is petulant and arbitrary.
-        Pop.toast('booped the like spider 🕷')
+        Pop.toast("booped the like spider 🕷");
       }
     }
-  }
 }
 </script>
 
