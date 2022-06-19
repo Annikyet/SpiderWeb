@@ -17,7 +17,7 @@ class PostsService {
   // api/profiles/:id/posts
   async getByCreator(creatorId) {
     const res = await api.get('api/profiles/' + creatorId + '/posts')
-    logger.log(res.data.posts)
+    // logger.log(res.data.posts)
     AppState.posts = res.data.posts
   }
 }

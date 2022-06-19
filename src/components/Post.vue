@@ -37,7 +37,7 @@ export default {
     const router = useRouter()
     return {
       gotoProfile() {
-        logger.log('gotoProfile')
+        // logger.log('gotoProfile')
         router.push({
           name: 'Profile',
           params: {id: props.post.creator.id}

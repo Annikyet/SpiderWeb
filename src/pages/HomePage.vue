@@ -22,7 +22,6 @@ export default {
   setup() {
     onMounted(async () => {
       try {
-        // add call to service here
         postsService.getAll()
       } catch (error) {
         Pop.toast(error.message, "error")

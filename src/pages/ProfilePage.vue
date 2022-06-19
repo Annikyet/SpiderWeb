@@ -26,7 +26,7 @@ export default {
       try {
         // call profilesService
         await profilesService.get(route.params.id)   // dummy id for now
-        logger.log(AppState.profile)
+        // logger.log(AppState.profile)
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')
