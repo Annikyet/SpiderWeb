@@ -105,6 +105,7 @@ export default {
         const timeBetween = Date.now() - new Date(this.post.createdAt)
 
         if (timeBetween < 60000) {
+          // Acts weirdly sometimes?
           return Math.floor(timeBetween) + ' seconds ago'
         } else if (timeBetween < 3600000) {
           return Math.floor(timeBetween / 60000) + ' minutes ago'

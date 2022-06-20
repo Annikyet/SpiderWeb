@@ -52,7 +52,20 @@ import Pop from "../utils/Pop";
 import { logger } from "../utils/Logger";
 import { incomeService } from "../services/IncomeService";
 export default {
-  setup() {
+  // Maybe a name will help?
+  // Doubtful, nothing I do works...
+  name: 'IncomePage',
+  // PROPS!!!
+  // No wait that didn't help WHYYY
+  // Missing required incomeBoxes, what
+  // Shouldn't this async trigger when the page loads? WHYNOT
+  props: { incomeBoxes: { type: Object, required: true } },
+  // Oh right, gotta add props to argument because... vue? i guess?
+  // Nope still doesn't work
+  // Why does Vue hate me
+  // Wait I don't need it
+  // But it still won't work
+  setup(props) {
     onMounted(async () => {
       try {
         // maybe if i get rid of await?

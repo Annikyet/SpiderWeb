@@ -4,7 +4,7 @@
   </header>
   <div class="d-flex">
     <sidebar>
-      <ProfileSidebar />
+      <AccountSidebar />
     </sidebar>
     <div class="scrolling">
       <main>
@@ -22,7 +22,7 @@
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
-import ProfileSidebar from './components/ProfileSidebar.vue'
+import AccountSidebar from './components/AccountSidebar.vue'
 import InfoFooter from './components/InfoFooter.vue';
 export default {
   name: "App",
@@ -31,7 +31,7 @@ export default {
       appState: computed(() => AppState)
     };
   },
-  components: { ProfileSidebar, InfoFooter }
+  components: { AccountSidebar, InfoFooter }
 }
 </script>
 <style lang="scss">
