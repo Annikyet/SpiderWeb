@@ -19,7 +19,7 @@
         <img :src="i.tall" :alt="i.title">
       </a> -->
         <p>Support your corporate overlords</p>
-        <p><i>Also can Vue just please stop fighting me!</i></p>
+        <p><i>Also can, like ANYTHING work for me? ANYTHING!</i></p>
         <p>It's like the same exact code but it doesn't work here</p>
         <p>WHYYYYYYY</p>
         <!-- weird... this is only triggering once, but there are two ads in the api data... -->
