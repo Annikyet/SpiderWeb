@@ -22,8 +22,18 @@ class PostsService {
   }
 
   async likePost(postId) {
-    const res = await api.post('api/posts/' + postId + '/like')
-    logger.log(res.data)
+    const res = await api.post('api/posts/' + postId + '/like', AppState.account.id)
+    // logger.log(res.data)
+    // change AppState
+    logger.log('likePost res.data: ', res.data.likeIds)
+    // logger.log('', AppState.posts.find((p) => p.id == postId).likeIds.find((i) => i == AppState.account.id))
+    logger.log('AppState.posts[thisId]', AppState.posts.find((p) => p.id == postId).likeIds)
+    try {
+      AppState.posts.find((p) => p.id == postId).likeIds = res.data.likeIds
+    } catch (error) {
+      logger.error('nope didnt work')
+      logger.error(error)
+    }
   }
 }
 

@@ -3,9 +3,9 @@
     <Navbar />
   </header>
   <div class="d-flex">
-    <sidebar>
+    <div class="sidebar">
       <AccountSidebar />
-    </sidebar>
+    </div>
     <div class="scrolling">
       <main>
         <router-view />
@@ -50,7 +50,7 @@ header {
   z-index: 1;
 }
 
-sidebar {
+.sidebar {
   width: var(--sidebar-width);
   height: calc(100vh - var(--navbar-height));
   position: fixed;

@@ -1,36 +1,17 @@
 <template>
   <div class="component">
-    <div class="post-card p-2 m-4">
+    <div class="post-card p-2 m-4 bg-dark text-light">
       <img :src="post.imgUrl" alt="post image" class="card-img">
       <div class="">
-        <!-- card img overlay is consuming card-body -->
-        <!-- put a router link here omg om gom g and pass creatorid through -->
-        <!-- WHY TF DOES @CLICK WORK HERE -->
-        <!-- <button @click="likePost()">test</button> -->
         <h3 class="card-title" @click="gotoProfile">
           <img v-if="post.creator.picture != '' && post.creator.picture" :src="post.creator.picture" :alt="post.creator.name" class="profile-pic-small">
           {{post.creator.name}}
         </h3>
       </div>
-      <!-- </div> -->
-      <!-- <div class="card"> -->
-        <!-- card-img-overlay is screwing everything up... -->
-        <!-- use absolute and relative, don't bother with bs5 -->
       <div class="">
         <p class="card-text">{{post.body}}</p>
         <div class="d-flex justify-content-between">
           <div class="time-posted">{{prettyTimeSince}}</div>
-          <!-- BUT NOT HERE!!!! -->
-          <!-- Tried using .native, v-on:click, calling a method vs object, wrapping in a <button> <div> and <h3>, -->
-          <!-- even tried copying the working code above AND IT DOESNT WORK HERE -->
-          <!-- WHYYYYY!?!?!?! THESE ARE THE SAME LEVEL IN THE DOM, AND NEITHER IS INSIDE ACTIVE CONTENT -->
-          <!-- DOES VUE JUST ONLY ALLOW ONE ONCLICK PER COMPONENT TO MAKE THINGS HARDER FOR NO REASON? -->
-          <!-- NOPE DOESN'T WORK INSIDE IT'S OWN COMPONENT EITHER (WHAT??? WHY???) -->
-          <!-- THE METHOD 'CALL' *ABOVE* WORKS FINE IF I CHANGE "gotoProfile" to "likePost" SO WHY DOES IT HATE ME *HERE*-->
-          <!-- TRIED USING THE methods OBJECT FROM THE VUE DOCUMENTATION AND STILL NADA -->
-          <!-- It's not as simple as just the first one called either, since commenting out the above @click doesn't enable it here -->
-          <!-- Maybe there's some HTML/CSS voodoo that's blocking this element from being clicked... somehow??? -->
-          <!-- SERIOUSLY VUE THIS IS SIMPLE, WHY MAKE IT SO FREAKING HARD!!???!! -->
           <div class="likes">
             {{post.likes.length}}
             <img src="../assets/img/spider.png" alt="Like" @click="likePost" class="like-button">
@@ -51,6 +32,7 @@ import { router } from "../router";
 import { logger } from "../utils/Logger";
 // Does Date need to be imported?
 import Pop from "../utils/Pop";
+import { postsService } from "../services/PostsService";
 // Why does this not match the structure on the Vue documentation?
 // Like, not even a little bit:
 // Wait what the hell, these are inside an object. BUT WHAT OBJECT??? IT DOESN'T SAY!
@@ -88,15 +70,18 @@ export default {
                     params: { id: props.post.creator.id }
                 });
             },
-            likePost() {
-              try {
-                logger.log('test')
-                Pop.toast("booped the like spider 🕷");
-                
-              } catch (error) {
-                logger.error(error)
+            async likePost() {
+              // logger.log('AppState.account: ', AppState.account)
+              if (AppState.account.id) {
+                try {
+                  logger.log("booped the like spider 🕷");
+                  const res = await postsService.likePost(props.post.id)
+                } catch (error) {
+                  logger.error(error)
+                }
+              } else {
+                logger.error('User not logged in')
               }
-                // This will never run because...???
             }
         };
     },
@@ -140,8 +125,8 @@ export default {
 
 .post-card {
   position: relative;
-  background-color: #000000d0;
-  color: #ffffffd0;
+  // background-color: #000000d0;
+  // color: #ffffffd0;
 }
 .card-img {
   min-height: 10vh;
