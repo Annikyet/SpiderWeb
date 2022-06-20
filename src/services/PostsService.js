@@ -20,6 +20,11 @@ class PostsService {
     // logger.log(res.data.posts)
     AppState.posts = res.data.posts
   }
+
+  async likePost(postId) {
+    const res = await api.post('api/posts/' + postId + '/like')
+    logger.log(res.data)
+  }
 }
 
 export const postsService = new PostsService()

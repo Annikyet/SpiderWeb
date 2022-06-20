@@ -1,21 +1,22 @@
 <template>
   <div class="component">
-    <div class="card p-2 m-4">
+    <div class="post-card p-2 m-4">
       <img :src="post.imgUrl" alt="post image" class="card-img">
-      <div class="card-img-overlay">
+      <div class="">
         <!-- card img overlay is consuming card-body -->
         <!-- put a router link here omg om gom g and pass creatorid through -->
         <!-- WHY TF DOES @CLICK WORK HERE -->
-        <button @click="likePost()">test</button>
+        <!-- <button @click="likePost()">test</button> -->
         <h3 class="card-title" @click="gotoProfile">
           <img v-if="post.creator.picture != '' && post.creator.picture" :src="post.creator.picture" :alt="post.creator.name" class="profile-pic-small">
           {{post.creator.name}}
         </h3>
       </div>
-      </div>
-      <div class="card">
+      <!-- </div> -->
+      <!-- <div class="card"> -->
         <!-- card-img-overlay is screwing everything up... -->
-      <div class="card-body">
+        <!-- use absolute and relative, don't bother with bs5 -->
+      <div class="">
         <p class="card-text">{{post.body}}</p>
         <div class="d-flex justify-content-between">
           <div class="time-posted">{{prettyTimeSince}}</div>
@@ -136,6 +137,12 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.post-card {
+  position: relative;
+  background-color: #000000d0;
+  color: #ffffffd0;
+}
 .card-img {
   min-height: 10vh;
   max-height: 40vh;
@@ -144,7 +151,9 @@ export default {
 .card-title {
   color: #ffffffc0;
   text-shadow: 1px 1px 6px #000000d0;
-
+  position: absolute;
+  top: 12px;
+  left: 12px;
 }
 
 .profile-pic-small {
@@ -158,6 +167,7 @@ export default {
   height: 32px;
   width: 32px;
   object-fit: contain;
+  filter: invert(1);
 }
 
 </style>

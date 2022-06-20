@@ -1,10 +1,16 @@
 <template>
   <div class="component bg-dark text-light">
+    <img :src="account.picture" alt="">
+    <h5>{{account.name}}</h5>
+    <p>{{account.bio}}</p>
+    <ul>
+      <li><i class="mdi mdi-school"></i> {{`${account.graduated ? 'Graduated' : 'Attending'} ${account.class}`}}</li>
+      <li><i class="mdi mdi-github"></i> {{account.github}}</li>
+      <li><i class="mdi mdi-linkedin"></i> {{account.linkedin}}</li>
+      <li><i class="mdi mdi-file"></i> {{account.resume}}</li>
+      <li><i class="mdi mdi-email"></i> {{account.email}}</li>
+    </ul>
 
-    <h1>I might be logged in</h1>
-    <h2><i>WHO KNOWS!!!</i></h2>
-    <h3><b>THE API SURE DOESN'T</b></h3>
-    <!-- {{account}} -->
 
   </div>
 </template>
@@ -26,12 +32,13 @@
 <script>
 import { AppState } from '../AppState'
 import { computed, onMounted } from "vue";
+import { logger } from '../utils/Logger';
 
 // This is off to a great start. I'm logged in, but no auth token in api... WONDERFUL
 export default {
   setup(){
     return {
-      account: computed(()=> AppState.account)
+      account: computed(()=> AppState.account),
     }
   }
 }
