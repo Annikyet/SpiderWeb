@@ -38,6 +38,8 @@ export default {
 }
 </script>
 
+<!-- check out the pokemang fireside -->
+
 <style scoped lang="scss">
 .post-container {
   width: 75%;

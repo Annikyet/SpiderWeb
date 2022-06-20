@@ -3,13 +3,18 @@
     <div class="card p-2 m-4">
       <img :src="post.imgUrl" alt="post image" class="card-img">
       <div class="card-img-overlay">
+        <!-- card img overlay is consuming card-body -->
         <!-- put a router link here omg om gom g and pass creatorid through -->
         <!-- WHY TF DOES @CLICK WORK HERE -->
+        <button @click="likePost()">test</button>
         <h3 class="card-title" @click="gotoProfile">
           <img v-if="post.creator.picture != '' && post.creator.picture" :src="post.creator.picture" :alt="post.creator.name" class="profile-pic-small">
           {{post.creator.name}}
         </h3>
       </div>
+      </div>
+      <div class="card">
+        <!-- card-img-overlay is screwing everything up... -->
       <div class="card-body">
         <p class="card-text">{{post.body}}</p>
         <div class="d-flex justify-content-between">
@@ -83,8 +88,14 @@ export default {
                 });
             },
             likePost() {
-                // This will never run because...???
+              try {
+                logger.log('test')
                 Pop.toast("booped the like spider 🕷");
+                
+              } catch (error) {
+                logger.error(error)
+              }
+                // This will never run because...???
             }
         };
     },

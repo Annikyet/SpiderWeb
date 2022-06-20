@@ -13,15 +13,12 @@
     <!-- maybe putting a v-if to gate it until assigned a value??? -->
     <!-- nope did precisely nothing :/ -->
     <!-- <div :v-if="incomeBoxes"> -->
+      <!-- no colon on v-for!!! -->
 
-      <div :v-for="i in incomeBoxes">
-        <!-- <a :href="i.linkURL">
-        <img :src="i.tall" :alt="i.title">
-      </a> -->
-        <p>Support your corporate overlords</p>
-        <p><i>Also can, like ANYTHING work for me? ANYTHING!</i></p>
-        <p>It's like the same exact code but it doesn't work here</p>
-        <p>WHYYYYYYY</p>
+      <div v-for="i in incomeBoxes" :key="i.tall">
+        <a :href="i.linkURL">
+          <img :src="i.tall" :alt="i.title">
+        </a>
         <!-- weird... this is only triggering once, but there are two ads in the api data... -->
       </div>
     <!-- </div> -->
@@ -102,5 +99,10 @@ export default {
 .income-vertical {
   display: flex;
   flex-direction: column;
+}
+
+img {
+  width: 100%;
+  object-fit: contain;
 }
 </style>
