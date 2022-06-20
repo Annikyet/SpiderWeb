@@ -3,9 +3,20 @@
 
     <h1>I might be logged in</h1>
     <h2><i>WHO KNOWS!!!</i></h2>
+    <h3><b>THE API SURE DOESN'T</b></h3>
 
   </div>
 </template>
+
+<!-- // 20220619201621
+// https://bcw-sandbox.herokuapp.com/account
+
+{
+  "error": "UnauthorizedError: No authorization token was found",
+  "url": "/account"
+} -->
+
+<!-- Because why should ANYTHING go right today? -->
 
 
 <script>
