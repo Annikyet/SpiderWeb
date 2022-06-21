@@ -4,18 +4,27 @@
     <img class="profile-picture" :src="profile.picture" alt="" />
     <h1>{{ profile.name }}</h1>
   </div>
-  <div class="profile-details">
-    <p class="bio">{{profile.bio}}</p>
-    <ul>
-      <li>{{`${profile.graduated ? 'Graduated' : 'Attending'}`}} {{profile.class}}</li>
-      <!-- v-if not working, idk fix later -->
-      <li :v-if="profile.github != ''"><i class="mdi mdi-github"></i> {{profile.github}}</li>
-      <li :v-if="profile.linkedin != ''"><i class="mdi mdi-linkedin"></i> {{profile.linkedin}}</li>
-      <li :v-if="profile.resume != ''"><i class="mdi mdi-email"></i> {{profile.email}}</li>
-    </ul>
-  </div>
-  <div class="post-container">
-    <Post v-for="p in posts" :key="p._id" :post="p" />
+  <div class="d-flex justify-content-between">
+
+    <div class="d-flex flex-column">
+
+      <div class="profile-details">
+        <p class="bio">{{ profile.bio }}</p>
+        <ul>
+          <li>{{ `${profile.graduated ? 'Graduated' : 'Attending'}` }} {{ profile.class }}</li>
+          <!-- v-if not working, idk fix later -->
+          <li :v-if="profile.github != ''"><i class="mdi mdi-github"></i> {{ profile.github }}</li>
+          <li :v-if="profile.linkedin != ''"><i class="mdi mdi-linkedin"></i> {{ profile.linkedin }}</li>
+          <li :v-if="profile.resume != ''"><i class="mdi mdi-email"></i> {{ profile.email }}</li>
+        </ul>
+      </div>
+      <div class="post-container">
+        <Post v-for="p in posts" :key="p._id" :post="p" />
+      </div>
+    </div>
+    <div class="income-container">
+      <IncomePane />
+    </div>
   </div>
 </template>
 
@@ -109,7 +118,7 @@ export default {
 
 .profile-banner {
   width: 100%;
-  height:  30vh;
+  height: 30vh;
   object-fit: cover;
   height: 320px;
 }
@@ -125,6 +134,7 @@ export default {
 }
 
 .post-container {
-  width: 75%;
+  /* width: 75%; */
+  width: 60vw;
 }
 </style>

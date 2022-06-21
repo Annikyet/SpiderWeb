@@ -9,6 +9,8 @@
         </h1>
       </div>
     </router-link>
+    <!-- whatever styling needs to be completely redone anyways, thanks for nothing Bootstrap -->
+      <!-- <button @click="createPost">+</button> -->
     <button
       class="navbar-toggler"
       type="button"
@@ -35,12 +37,18 @@
       <Login />
     </div>
   </nav>
+  <!-- <div class="d-flex w-100 justify-content-center">meow meow meows</div> -->
 </template>
 
 <script>
+import Pop from '../utils/Pop';
 export default {
   setup() {
-    return {};
+    return {
+      createPost() {
+        Pop.toast('MEOW')
+      }
+    };
   },
 };
 </script>

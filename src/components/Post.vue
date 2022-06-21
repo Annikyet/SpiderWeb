@@ -2,18 +2,23 @@
   <div class="component">
     <div class="post-card p-2 m-4 bg-dark text-light">
       <img :src="post.imgUrl" alt="post image" class="card-img">
-      <div class="">
-        <h3 class="card-title" @click="gotoProfile">
+      <div class="card-title">
+        <!-- add delete button here -->
+        <h3 class="" @click="gotoProfile">
           <img v-if="post.creator.picture != '' && post.creator.picture" :src="post.creator.picture" :alt="post.creator.name" class="profile-pic-small">
           {{post.creator.name}}
         </h3>
+        <h3><i v-if="post.creator.id == account.id" class="mdi mdi-delete" @click="deletePost"></i></h3>
       </div>
       <div class="">
         <p class="card-text">{{post.body}}</p>
         <div class="d-flex justify-content-between">
           <div class="time-posted">{{prettyTimeSince}}</div>
           <div class="likes">
-            {{post.likes.length}}
+            <!-- Nothing is responsive, kinda defeats the point of Vue... -->
+            <!-- Maybe I need to use the proxystate trick? -->
+            <!-- Right, like it would be that easy, it's Vue -->
+            {{post.likeIds.length}}
             <img src="../assets/img/spider.png" alt="Like" @click="likePost" class="like-button">
           </div>
         </div>
@@ -54,7 +59,10 @@ import { postsService } from "../services/PostsService";
 export default {
   // maybe adding a name will help?
   name: 'Post',
-    props: { post: { type: Object, required: true } },
+    props: {
+      post: { type: Object, required: true },
+      // account: {type: Object, required: true}
+      },
     setup(props) {
         const router = useRouter();
         return {
@@ -82,7 +90,12 @@ export default {
               } else {
                 logger.error('User not logged in')
               }
-            }
+            },
+            async deletePost() {
+              // Pop.toast('get ridda that post!')
+              postsService.deletePost(props.post.id)
+            },
+          account: computed(() => AppState.account)
         };
     },
     // nope adding the methods object does nothing
@@ -103,7 +116,7 @@ export default {
 
         if (timeBetween < 60000) {
           // Acts weirdly sometimes?
-          return Math.floor(timeBetween) + ' seconds ago'
+          return Math.floor(timeBetween / 1000) + ' seconds ago'
         } else if (timeBetween < 3600000) {
           return Math.floor(timeBetween / 60000) + ' minutes ago'
         } else if (timeBetween < 86400000) {
@@ -133,12 +146,21 @@ export default {
   max-height: 40vh;
   object-fit: cover;
 }
+
 .card-title {
-  color: #ffffffc0;
-  text-shadow: 1px 1px 6px #000000d0;
   position: absolute;
   top: 12px;
   left: 12px;
+  display: flex;
+  width: 96%;
+  justify-content: space-between;
+  color: #ffffffc0;
+  text-shadow: 1px 1px 6px #000000d0;
+}
+.post-creator {
+  color: #ffffffc0;
+  text-shadow: 1px 1px 6px #000000d0;
+
 }
 
 .profile-pic-small {
